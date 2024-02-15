@@ -7,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import samuelesimeone.esercizio_u5w2d4.entities.BlogPost;
 import samuelesimeone.esercizio_u5w2d4.dto.BlogPost.BlogPostPayload;
 import samuelesimeone.esercizio_u5w2d4.exceptions.BadRequestException;
 import samuelesimeone.esercizio_u5w2d4.services.BlogPostService;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -53,5 +55,9 @@ public class BlogPostController {
         this.blogPostService.deletePost(id);
     }
 
+    @PostMapping("/upload")
+    public BlogPost uploadCover(@RequestParam UUID id, @RequestParam("cover")MultipartFile image) throws IOException{
+        return this.blogPostService.uploadCover(id,image);
+    }
 
 }

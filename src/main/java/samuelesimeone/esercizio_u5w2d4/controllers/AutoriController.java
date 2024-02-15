@@ -7,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import samuelesimeone.esercizio_u5w2d4.dto.Autori.AutoriDTO;
 import samuelesimeone.esercizio_u5w2d4.entities.Autore;
 import samuelesimeone.esercizio_u5w2d4.exceptions.BadRequestException;
 import samuelesimeone.esercizio_u5w2d4.services.AutoriService;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -51,5 +53,10 @@ public class AutoriController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id){
         this.autoriService.delete(id);
+    }
+
+    @PostMapping("/upload")
+    public Autore uploadAvatar(@RequestParam UUID id,@RequestParam("avatar")MultipartFile image) throws IOException{
+        return this.autoriService.uploadAvatar(id, image);
     }
 }
