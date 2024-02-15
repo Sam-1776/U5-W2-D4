@@ -22,7 +22,5 @@ public class BlogPostPayload {
     private String titolo;
     @NotEmpty(message = "La contenuto è obbligatoria")
     private String contenuto;
-    @NotEmpty(message = "La tempoDiLettura è obbligatoria")
-    private double tempoDiLettura;
     private UUID autoreId;
 }

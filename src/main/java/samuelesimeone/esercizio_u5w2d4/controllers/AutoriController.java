@@ -43,7 +43,7 @@ public class AutoriController {
     }
 
     @PutMapping("/{id}")
-    public Autore update(@PathVariable UUID id, @RequestBody Autore autoreUp){
+    public Autore update(@PathVariable UUID id, @RequestBody AutoriDTO autoreUp){
         return this.autoriService.update(id, autoreUp);
     }
 

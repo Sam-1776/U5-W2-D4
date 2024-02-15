@@ -18,5 +18,5 @@ public record AutoriDTO(
         @Email(message = "Email inerita non valida!")
         String email,
         @NotEmpty(message = "Data di nascita obbligatoria")
-        LocalDate dataDiNascita){
+        String dataDiNascita){
 }

@@ -33,8 +33,8 @@ public class BlogPostService {
     public BlogPost save(BlogPostPayload post){
         Autore found = autoriService.findById(post.getAutoreId());
         String cover = "https://picsum.photos/200/300";
-        post.setTempoDiLettura(rdm.nextDouble(1.0, 60.0));
-        BlogPost newPost = new BlogPost(post.getCategoria(), post.getTitolo(), post.getContenuto(), cover, post.getTempoDiLettura(), found);
+        double time = (rdm.nextDouble(1.0, 60.0));
+        BlogPost newPost = new BlogPost(post.getCategoria(), post.getTitolo(), post.getContenuto(), cover, time, found);
         return blogPostDAO.save(newPost);
     }
 
@@ -43,13 +43,13 @@ public class BlogPostService {
     }
 
     public BlogPost update(UUID id, BlogPostPayload postUp){
-        postUp.setTempoDiLettura(rdm.nextDouble(1.0, 60.0));
+        double time = (rdm.nextDouble(1.0, 60.0));
         BlogPost found = this.findById(id);
         found.setCategoria(postUp.getCategoria());
         found.setContenuto(postUp.getContenuto());
         found.setTitolo(postUp.getTitolo());
         found.setCover(found.getCover());
-        found.setTempoDiLettura(postUp.getTempoDiLettura());
+        found.setTempoDiLettura(time);
         found.setAutore(found.getAutore());
         return blogPostDAO.save(found);
     }

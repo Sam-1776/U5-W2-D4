@@ -45,17 +45,16 @@ public class AutoriService {
         return autoriDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
-    public Autore update(UUID id, Autore autoreUp){
-        autoreUp.setAvatar("https://ui-avatars.com/api/?name=" + autoreUp.getNome() + "+" + autoreUp.getCognome());
-        String Day = autoreUp.getDataDiNascita().toString();
+    public Autore update(UUID id, AutoriDTO autoreUp){
+        String avatar = "https://ui-avatars.com/api/?name=" + autoreUp.nome() + "+" + autoreUp.cognome();
+        String Day = autoreUp.dataDiNascita().toString();
         LocalDate bDay = LocalDate.parse(Day);
-        autoreUp.setDataDiNascita(bDay);
         Autore found = this.findById(id);
-        found.setNome(autoreUp.getNome());
-        found.setCognome(autoreUp.getCognome());
-        found.setEmail(autoreUp.getEmail());
-        found.setDataDiNascita(autoreUp.getDataDiNascita());
-        found.setAvatar(autoreUp.getAvatar());
+        found.setNome(autoreUp.nome());
+        found.setCognome(autoreUp.cognome());
+        found.setEmail(autoreUp.email());
+        found.setDataDiNascita(bDay);
+        found.setAvatar(avatar);
         return autoriDAO.save(found);
     }
 

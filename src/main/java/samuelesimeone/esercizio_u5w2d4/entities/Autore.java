@@ -1,13 +1,12 @@
 package samuelesimeone.esercizio_u5w2d4.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +25,10 @@ public class Autore {
     private String email;
     private LocalDate dataDiNascita;
     private String avatar;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "autore", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BlogPost> blogPosts;
 
     public Autore(String nome, String cognome, String email, LocalDate dataDiNascita, String avatar) {
         this.nome = nome;
