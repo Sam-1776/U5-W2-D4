@@ -4,8 +4,12 @@ package samuelesimeone.esercizio_u5w2d4.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import samuelesimeone.esercizio_u5w2d4.dto.Autori.AutoriDTO;
 import samuelesimeone.esercizio_u5w2d4.entities.Autore;
+import samuelesimeone.esercizio_u5w2d4.exceptions.BadRequestException;
 import samuelesimeone.esercizio_u5w2d4.services.AutoriService;
 
 import java.util.UUID;
@@ -31,7 +35,10 @@ public class AutoriController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Autore save(@RequestBody Autore autore){
+    public Autore save(@RequestBody @Validated AutoriDTO autore, BindingResult validation){
+        if (validation.hasErrors()){
+            throw new BadRequestException(validation.getAllErrors());
+        }
         return this.autoriService.save(autore);
     }
 

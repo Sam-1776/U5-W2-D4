@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import samuelesimeone.esercizio_u5w2d4.dao.AutoriDAO;
+import samuelesimeone.esercizio_u5w2d4.dto.Autori.AutoriDTO;
 import samuelesimeone.esercizio_u5w2d4.entities.Autore;
 import samuelesimeone.esercizio_u5w2d4.exceptions.BadRequestException;
 import samuelesimeone.esercizio_u5w2d4.exceptions.NotFoundException;
@@ -29,15 +30,15 @@ public class AutoriService {
     }
 
 
-    public Autore save(Autore autore){
-        autoriDAO.findByEmail(autore.getEmail()).ifPresent(element -> {
+    public Autore save(AutoriDTO autore){
+        autoriDAO.findByEmail(autore.email()).ifPresent(element -> {
             throw new BadRequestException("L'email inserita è già in uso, riprovare");
         });
-        autore.setAvatar("https://ui-avatars.com/api/?name=" + autore.getNome() + "+" + autore.getCognome());
-        String Day = autore.getDataDiNascita().toString();
+        String avatar = "https://ui-avatars.com/api/?name=" + autore.nome() + "+" + autore.cognome();
+        String Day = autore.dataDiNascita().toString();
         LocalDate bDay = LocalDate.parse(Day);
-        autore.setDataDiNascita(bDay);
-        return autoriDAO.save(autore);
+        Autore newAutore = new Autore(autore.nome(), autore.cognome(), autore.email(), bDay, avatar);
+        return autoriDAO.save(newAutore);
     }
 
     public Autore findById(UUID id){

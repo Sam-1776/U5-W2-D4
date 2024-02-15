@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import samuelesimeone.esercizio_u5w2d4.dao.BlogPostDAO;
 import samuelesimeone.esercizio_u5w2d4.entities.Autore;
 import samuelesimeone.esercizio_u5w2d4.entities.BlogPost;
-import samuelesimeone.esercizio_u5w2d4.entities.BlogPostPayload;
+import samuelesimeone.esercizio_u5w2d4.dto.BlogPost.BlogPostPayload;
 import samuelesimeone.esercizio_u5w2d4.exceptions.NotFoundException;
 
 import java.util.Random;
@@ -32,9 +32,9 @@ public class BlogPostService {
 
     public BlogPost save(BlogPostPayload post){
         Autore found = autoriService.findById(post.getAutoreId());
-        post.setCover("https://picsum.photos/200/300");
+        String cover = "https://picsum.photos/200/300";
         post.setTempoDiLettura(rdm.nextDouble(1.0, 60.0));
-        BlogPost newPost = new BlogPost(post.getCategoria(), post.getTitolo(), post.getCover(), post.getContenuto(), post.getTempoDiLettura(), found);
+        BlogPost newPost = new BlogPost(post.getCategoria(), post.getTitolo(), post.getContenuto(), cover, post.getTempoDiLettura(), found);
         return blogPostDAO.save(newPost);
     }
 
@@ -43,13 +43,12 @@ public class BlogPostService {
     }
 
     public BlogPost update(UUID id, BlogPostPayload postUp){
-        postUp.setCover("https://picsum.photos/" + rdm.nextInt(100, 200) + "/" + rdm.nextInt(200, 300));
         postUp.setTempoDiLettura(rdm.nextDouble(1.0, 60.0));
         BlogPost found = this.findById(id);
         found.setCategoria(postUp.getCategoria());
         found.setContenuto(postUp.getContenuto());
         found.setTitolo(postUp.getTitolo());
-        found.setCover(postUp.getCover());
+        found.setCover(found.getCover());
         found.setTempoDiLettura(postUp.getTempoDiLettura());
         found.setAutore(found.getAutore());
         return blogPostDAO.save(found);
