@@ -55,8 +55,8 @@ public class BlogPostController {
         this.blogPostService.deletePost(id);
     }
 
-    @PostMapping("/upload")
-    public BlogPost uploadCover(@RequestParam UUID id, @RequestParam("cover")MultipartFile image) throws IOException{
+    @PostMapping("/upload/{id}")
+    public BlogPost uploadCover(@PathVariable UUID id, @RequestParam("cover")MultipartFile image) throws IOException{
         return this.blogPostService.uploadCover(id,image);
     }
 

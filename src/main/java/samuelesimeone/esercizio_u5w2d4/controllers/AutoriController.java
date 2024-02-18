@@ -55,8 +55,8 @@ public class AutoriController {
         this.autoriService.delete(id);
     }
 
-    @PostMapping("/upload")
-    public Autore uploadAvatar(@RequestParam UUID id,@RequestParam("avatar")MultipartFile image) throws IOException{
+    @PostMapping("/upload/{id}")
+    public Autore uploadAvatar(@PathVariable UUID id,@RequestParam("avatar")MultipartFile image) throws IOException{
         return this.autoriService.uploadAvatar(id, image);
     }
 }
